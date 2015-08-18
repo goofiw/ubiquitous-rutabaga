@@ -17,7 +17,7 @@ var dataRef = new Firebase(cfg.firebase.url);
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index');
 });
 
 router.post('/notify', function(req, res, next) {
