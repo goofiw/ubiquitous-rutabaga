@@ -11,7 +11,6 @@ var cfg = require('envigor')();
 var tokenGenerator = new FirebaseTokenGenerator(cfg.firebase.secret);
 var token = tokenGenerator.createToken({uid: "4", some: "randomdoberman", data: "ahhhh"});
 
-var dataRef = new Firebase(cfg.firebase.url);
 
 
 
@@ -25,7 +24,10 @@ router.post('/notify', function(req, res, next) {
   var guestName = req.body.guestName;
   var message = req.body.message;
 
-  var ref = new Firebase('https://startuphall.firebaseio.com/members/' + id);
+  var dataRef = new Firebase('https://startuphall.firebaseio.com/members/' + id);
+  dataRef.on('value', function(snapshot){
+    var ref = snapshot.val();
+      console.log(ref);
     //send a slack if the member has a slack name
     //need to ohave username preceded by @
 
@@ -71,6 +73,8 @@ router.post('/notify', function(req, res, next) {
       }
       console.log('Email Message sent: ' + info.response);
     });
+  })
+
 });
 
 module.exports = router;
