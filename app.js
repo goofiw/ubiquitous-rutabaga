@@ -7,6 +7,8 @@ var bodyParser = require('body-parser');
 // var r = require('rethinkdb');
 var Firebase = require('firebase');
 var FirebaseTokenGenerator = require('firebase-token-generator');
+var nodemailer = require('nodmailer');
+var secrets = require('./secrets');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -40,7 +42,6 @@ var tokenGenerator = new FirebaseTokenGenerator(secrets.FIREBASE_SECRET);
 var token = tokenGenerator.createToken({uid: "4", some: "randomdoberman", data: "ahhhh"});
 
 var dataRef = new Firebase('https://startuphall.firebaseio.com');
-dataRef.set("test");
 
 app.use('/', routes);
 app.use('/users', users);
@@ -51,6 +52,22 @@ app.use(function(req, res, next) {
   err.status = 404;
   next(err);
 });
+
+  var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'goofiwmailer@gmail.com',
+      pass: 'secrets.MAIL_PASS'
+    }
+  });
+
+  var mailOptions = {
+    from: 'dev <goofiwmailer@gmail.com>',
+    to: 'will <will@willchantry.com>',
+    subject: 'test',
+    text: 'test',
+    html: '<b>test</b>'
+  };
 
 // error handlers
 
@@ -75,6 +92,12 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
+
+var server = app.listen(3000, function() {
+  var host = server.address().address;
+  var port = server.address().port;
+  console.log('Example app listening at http://%s:%s', host, port);
+})
 
 
 module.exports = app;
