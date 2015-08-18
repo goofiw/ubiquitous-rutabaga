@@ -3,8 +3,8 @@ var router = express.Router();
 
 var Firebase = require('firebase');
 var FirebaseTokenGenerator = require('firebase-token-generator');
-var nodemailer = require('nodmailer');
-var secrets = require('./secrets');
+var nodemailer = require('nodemailer');
+var secrets = require('../secrets');
 
 var tokenGenerator = new FirebaseTokenGenerator(secrets.FIREBASE_SECRET);
 var token = tokenGenerator.createToken({uid: "4", some: "randomdoberman", data: "ahhhh"});
@@ -23,26 +23,25 @@ router.post('/notify', function(req, res, next) {
   var guestName = req.body.guestName;
   var message = req.body.message;
 
-  ref.once(function(members){
-
+  var ref = new Firebase('https://startuphall.firebaseio.com/members/' + id);
     //send a slack if the member has a slack name
     //need to ohave username preceded by @
-    if (member.slack){
+    if (ref.slack){
       request.post({url:'https://slack.com/api/chat.postMessage', 
           form: {
             token: secrets.SLACK_STARTUP_HALL,
-            channel: member.slack,
+            channel: ref.slack,
             test: 'Howdy, ' + guestName + ' is here to see you and is waiting in the lobby',
           }
         }, 
         function(err,httpResponse,body){ 
           if (err) {
             console.log(err);
-          } else if {
-            console.log('messenge sent');
+          } else {
+            console.log('slack messenge sent');
           }
-        }    
-      });
+        }
+      );
     }
 
     //set up node mailer
@@ -57,7 +56,7 @@ router.post('/notify', function(req, res, next) {
 
     var mailOptions = {
       from: 'dev <goofiwmailer@gmail.com>',
-      to: memberName.concat(' <' + email + '>'),
+      to: ref.name.concat(' <' + ref.email + '>'),
       subject: guestName.concat(' is here to see you'),
       text: message
     };
@@ -66,9 +65,8 @@ router.post('/notify', function(req, res, next) {
       if(error){
           return console.log(error);
       }
-      console.log('Message sent: ' + info.response);
+      console.log('Email Message sent: ' + info.response);
     });
-  });
 });
 
 module.exports = router;
