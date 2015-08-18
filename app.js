@@ -8,7 +8,7 @@ var bodyParser = require('body-parser');
 var Firebase = require('firebase');
 var FirebaseTokenGenerator = require('firebase-token-generator');
 var nodemailer = require('nodmailer');
-var secrets = require('./secrets');
+var cfg = require('envigor')();
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -38,7 +38,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // })
 
 
-var tokenGenerator = new FirebaseTokenGenerator(secrets.FIREBASE_SECRET);
+var tokenGenerator = new FirebaseTokenGenerator(cfg.firebase.secret);
 var token = tokenGenerator.createToken({uid: "4", some: "randomdoberman", data: "ahhhh"});
 
 var dataRef = new Firebase('https://startuphall.firebaseio.com');
@@ -57,7 +57,7 @@ app.use(function(req, res, next) {
     service: 'gmail',
     auth: {
       user: 'goofiwmailer@gmail.com',
-      pass: 'secrets.MAIL_PASS'
+      pass: cfg.smtp.password
     }
   });
 

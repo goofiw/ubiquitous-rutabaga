@@ -4,12 +4,12 @@ var router = express.Router();
 var Firebase = require('firebase');
 var FirebaseTokenGenerator = require('firebase-token-generator');
 var nodemailer = require('nodmailer');
-var secrets = require('./secrets');
+var cfg = require('envigor')();
 
-var tokenGenerator = new FirebaseTokenGenerator(secrets.FIREBASE_SECRET);
+var tokenGenerator = new FirebaseTokenGenerator(cfg.firebase.secret);
 var token = tokenGenerator.createToken({uid: "4", some: "randomdoberman", data: "ahhhh"});
 
-var dataRef = new Firebase('https://startuphall.firebaseio.com');
+var dataRef = new Firebase(cfg.firebase.url);
 
 
 
@@ -28,20 +28,20 @@ router.post('/notify', function(req, res, next) {
     //send a slack if the member has a slack name
     //need to ohave username preceded by @
     if (member.slack){
-      request.post({url:'https://slack.com/api/chat.postMessage', 
+      request.post({url:'https://slack.com/api/chat.postMessage',
           form: {
-            token: secrets.SLACK_STARTUP_HALL,
+            token: cfg.env.SLACK_STARTUP_HALL,
             channel: member.slack,
             test: 'Howdy, ' + guestName + ' is here to see you and is waiting in the lobby',
           }
-        }, 
-        function(err,httpResponse,body){ 
+        },
+        function(err,httpResponse,body){
           if (err) {
             console.log(err);
           } else if {
             console.log('messenge sent');
           }
-        }    
+        }
       });
     }
 
@@ -51,7 +51,7 @@ router.post('/notify', function(req, res, next) {
       service: 'gmail',
       auth: {
         user: 'goofiwmailer@gmail.com',
-        pass: 'secrets.MAIL_PASS'
+        pass: cfg.smtp.password
       }
     });
 
