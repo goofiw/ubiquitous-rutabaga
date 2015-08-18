@@ -3,13 +3,10 @@ var router = express.Router();
 
 var Firebase = require('firebase');
 var FirebaseTokenGenerator = require('firebase-token-generator');
-<<<<<<< HEAD
+
 var nodemailer = require('nodemailer');
-var secrets = require('../secrets');
-=======
-var nodemailer = require('nodmailer');
+
 var cfg = require('envigor')();
->>>>>>> 8421416eed07b60832d3dd3f79cb7eb2cccce406
 
 var tokenGenerator = new FirebaseTokenGenerator(cfg.firebase.secret);
 var token = tokenGenerator.createToken({uid: "4", some: "randomdoberman", data: "ahhhh"});
@@ -31,19 +28,13 @@ router.post('/notify', function(req, res, next) {
   var ref = new Firebase('https://startuphall.firebaseio.com/members/' + id);
     //send a slack if the member has a slack name
     //need to ohave username preceded by @
-<<<<<<< HEAD
+
     if (ref.slack){
-      request.post({url:'https://slack.com/api/chat.postMessage', 
-          form: {
-            token: secrets.SLACK_STARTUP_HALL,
-            channel: ref.slack,
-=======
-    if (member.slack){
+
       request.post({url:'https://slack.com/api/chat.postMessage',
           form: {
             token: cfg.env.SLACK_STARTUP_HALL,
-            channel: member.slack,
->>>>>>> 8421416eed07b60832d3dd3f79cb7eb2cccce406
+            channel: ref.slack,
             test: 'Howdy, ' + guestName + ' is here to see you and is waiting in the lobby',
           }
         },
@@ -54,11 +45,7 @@ router.post('/notify', function(req, res, next) {
             console.log('slack messenge sent');
           }
         }
-<<<<<<< HEAD
       );
-=======
-      });
->>>>>>> 8421416eed07b60832d3dd3f79cb7eb2cccce406
     }
 
     //set up node mailer

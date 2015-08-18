@@ -34,15 +34,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 //     console.log(JSON.stringify(result, null, 2));
 // })
 
-
-<<<<<<< HEAD
-=======
-var tokenGenerator = new FirebaseTokenGenerator(cfg.firebase.secret);
-var token = tokenGenerator.createToken({uid: "4", some: "randomdoberman", data: "ahhhh"});
-
-var dataRef = new Firebase('https://startuphall.firebaseio.com');
->>>>>>> 8421416eed07b60832d3dd3f79cb7eb2cccce406
-
 app.use('/', routes);
 app.use('/users', users);
 
@@ -52,18 +43,6 @@ app.use(function(req, res, next) {
   err.status = 404;
   next(err);
 });
-
-<<<<<<< HEAD
-=======
-  var transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: 'goofiwmailer@gmail.com',
-      pass: cfg.smtp.password
-    }
-  });
->>>>>>> 8421416eed07b60832d3dd3f79cb7eb2cccce406
-
 
 // error handlers
 
