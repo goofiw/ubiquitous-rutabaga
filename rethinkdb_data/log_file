@@ -1,0 +1,13 @@
+2015-08-18T11:33:08.229375000 5.624530s notice: Recursively removing directory /Users/Will/notify/rethinkdb_data/tmp
+2015-08-18T11:33:08.231754000 5.626914s notice: Initializing directory /Users/Will/notify/rethinkdb_data
+2015-08-18T11:33:08.231875000 5.627028s info: Creating a default database for your convenience. (This is because you ran 'rethinkdb' without 'create', 'serve', or '--join', and the directory '/Users/Will/notify/rethinkdb_data' did not already exist or is empty.)
+2015-08-18T11:33:08.232720000 5.627876s notice: Running rethinkdb 2.1.1 (CLANG 6.1.0 (clang-602.0.53))...
+2015-08-18T11:33:08.239727000 5.634882s notice: Running on Darwin 14.3.0 x86_64
+2015-08-18T11:33:08.239809000 5.634963s notice: Loading data from directory /Users/Will/notify/rethinkdb_data
+2015-08-18T11:33:08.338919000 5.734072s info: Automatically using cache size of 847 MB
+2015-08-18T11:33:08.339507000 5.734661s notice: Listening for intracluster connections on port 29015
+2015-08-18T11:33:08.346749000 5.741902s notice: Listening for client driver connections on port 28015
+2015-08-18T11:33:08.347044000 5.742197s notice: Listening for administrative HTTP connections on port 8080
+2015-08-18T11:33:08.347053000 5.742206s notice: Listening on addresses: 127.0.0.1, ::1
+2015-08-18T11:33:08.347054000 5.742207s notice: To fully expose RethinkDB on the network, bind to all addresses by running rethinkdb with the `--bind all` command line option.
+2015-08-18T11:33:08.347060000 5.742213s notice: Server ready, "Wills_MacBook_Air_local_sgn" ce2d33ec-1aaf-4d1c-80dd-77cc059aad55
